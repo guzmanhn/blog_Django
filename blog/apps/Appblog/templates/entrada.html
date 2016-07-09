@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block contenido %}
+	
+<article>
+	<h3>{{entrada.titulo}}</h3>
+	<time>{{entrada.fecha}}</time>
+	<p>{{entrada.contenido}}</p>
+</article>
+{% for comentario in comentarios  %}
+		<article>
+			<h4>{{comentario.autor}}   <time>{{comentario.fechacreacion}}</time></h4>
+			
+			<p>{{comentario.mensaje}}</p>
+
+		</article>
+{% endfor %}
+<form action="{% url "blog.apps.Appblog.views.entrada" entrada.pk %}" method="POST">
+	{% csrf_token %}
+    {{ form.as_p }}
+	<p><input type="submit" value="Enviar"></p>
+</form>
+
+
+{% endblock contenido %}

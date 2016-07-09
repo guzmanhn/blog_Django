@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>	
+	<title>Document</title>
+	<style type="text/css">
+		body{
+			margin: 0px;
+			padding: 0px;
+			background: rgb(220,220,220);
+		}
+		header a{
+			text-decoration: none;
+		}
+		#contenedor{
+			with:90%;
+			margin: auto;
+			background: rgb(240,240,240);
+
+			box-shadow: 0px 10px 15px rgb(0,0,0,0.1);
+			padding: 15px;
+		}
+		p{
+			text-align: justify;
+			font-family: sans-serif;
+			font-size: 11px;
+			color:rgb(100,100,100);
+		}
+		h1,h2,h3{
+			margin: 0px;
+			padding: 0px;
+			color:rgb(50,50,50);
+
+		}
+		article p{
+			padding-left: 20px;
+		}
+		article {
+			border-bottom: 1px dashed grey;
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+		h1{
+			font-size: 52px;
+		}
+		h2{
+			font-size: 18px;
+			text-decoration: underline;
+		}
+		#articulos{
+			width:70%;
+			float: left;
+		}
+		aside{
+			width:25%;
+			float: right;
+			background: rgb(240,240,240);
+			padding: 10px;
+			height: 100%;
+
+
+		}
+
+	</style>
+</head>
+<body>
+	<div id="contenedor">
+		<header>
+			<a href="http://localhost:8000"><h1>Mi blog</h1></a>
+			<h2>Blog de Marvin</h2>
+		</header>
+		<section>
+			<div id="articulos">
+				{% block contenido %}
+				{% endblock contenido %}
+			</div>
+
+			<aside>
+				<div>
+						<h4><a href="/admin">Administracion</a></h4>
+						</div>
+				<div>
+						<h4>Historial of post</h4>
+						{% load years_months %}
+						{% get_year_list as years %} 
+						{% get_year_month_list as months %} 
+
+
+						{% for OnlyYear in years %}
+								<div class="panel-group" id="accordion">
+									<div class="panel panel-default">
+									      <div class="panel-heading">
+									        <h4 class="panel-title">
+									          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{OnlyYear.year}}">Year: {{OnlyYear.year}}</a>
+									        </h4>
+									      </div>
+									      <div id="collapse{{OnlyYear.year}}" class="panel-collapse collapse">
+									        <div class="panel-body">
+													{% for month in months %}
+															{% if OnlyYear.year = month.year %}
+																		<a href="/entradas/{{month.year}}/{{month.idmonth}}"><p>{{month.month}}</p></a>
+															{% endif %}
+													{% endfor %}
+									        </div>
+									      </div>
+									</div>
+							    </div> 
+						{% endfor %}
+				</div>
+				<div>
+						<h4>Sobre mi</h4>
+						<p>ut I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful</p>
+				</div>
+			</aside>
+		</section>
+		<div style = "clear:both;">
+			<footer >
+				(c) Marvin Guzman
+			</footer>
+		</div>
+	</div>
+</body>
+</html>
